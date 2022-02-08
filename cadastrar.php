@@ -13,8 +13,6 @@ include_once 'conexao.php';
 $reponse_json = file_get_contents("php://input");
 $dados = json_decode($reponse_json, true);
 
-
-
 if($dados) {
 
     $query = "INSERT INTO vendas (nome, email, id_vendedor, descricao_venda, comissao, valor_venda, data_venda) VALUES (:nome, :email, :id_vendedor, :descricao_venda, :comissao, :valor_venda, :data_venda)";
@@ -33,19 +31,19 @@ if($dados) {
     if($cad_venda->rowCount()) {
         $response = [
             "erro" => false,
-            "mensagem" => "Venda Cadastrado no DB via API com Sucesso!"
+            "mensagem" => "Venda Cadastrada no DB via API com Sucesso!"
         ];
     }else{
         $response = [
             "erro" => true,
-            "mensagem" => "Venda não Cadastrado através da API!"
+            "mensagem" => "Venda não Cadastrada através da API!"
         ];
     }
     
 } else {
     $response = [
         "erro" => true,
-        "mensagem" => "Venda não Cadastrado!"
+        "mensagem" => "Venda não Cadastrada!"
     ];
 }
 

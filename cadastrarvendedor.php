@@ -17,7 +17,7 @@ $dados = json_decode($reponse_json, true);
 
 if($dados) {
 
-    $query = "INSERT INTO vendas (nome, email, id_vendedor) VALUES (:nome, :email, :id_vendedor)";
+    $query = "INSERT INTO tbl_vendedor (nome, email, id_vendedor) VALUES (:nome, :email, :id_vendedor)";
     $cad_venda = $conn->prepare($query);
 
     $cad_venda->bindParam(':nome', $dados['vendedor']['nome'], PDO::PARAM_STR);

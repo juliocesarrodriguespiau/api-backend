@@ -10,7 +10,8 @@ header("Content-Type: application/json; charset=UTF-8");
 //incluir conexao
 include_once 'conexao.php';
 
-$query = "SELECT id, nome, email, id_vendedor, descricao_venda, comissao, valor_venda, data_venda FROM vendas ORDER BY id";
+//$query = "SELECT id, nome, email, id_vendedor, descricao_venda, comissao, valor_venda, data_venda FROM vendas ORDER BY id";
+$query = "SELECT * FROM vendas INNER JOIN tbl_vendedor ON vendas.id_vendedor = tbl_vendedor.id_vendedor;";
 $result = $conn->prepare($query);
 $result->execute();
 

@@ -1,45 +1,35 @@
 <?php
-
 // cabecalhos obrigatórios
 header("Access-Control-Allow-Origin: *");
+
 header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Cache-Control, Pragma, Authorization, Accept, Accept-Encoding");
 //header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
+
 header("Content-Type: application/json; charset=UTF-8");
-//header("Access-Control-Allow-Methods: GET, PUT, POST, DELETE");
 
 //incluir conexao
 include_once 'conexao.php';
 
-//$comissao = 71;
-$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-$response = "";
+$query = "SELECT id_vendedor, nome, email FROM tbl_vendedor ORDER BY id_vendedor";
+$result = $conn->prepare($query);
+$result->execute();
 
-$query_vendedor = "SELECT id, nome, email, id_vendedor FROM vendas WHERE id=:id LIMIT 1";
-$result_vendedor = $conn->prepare($query_vendedor); 
-$result_vendedor->bindParam(':id', $id, PDO::PARAM_INT);
-$result_vendedor->execute();
+if(($result) AND ($result->rowCount() != 0)) {
+    while($row_venda = $result->fetch(PDO::FETCH_ASSOC)) {
+        //var_dump($row_vendedor);
+        extract($row_venda);
 
-if(($result_vendedor) AND ($result_vendedor->rowCount() != 0)) {
-    $row_vendedor = $result_vendedor->fetch(PDO::FETCH_ASSOC);
-    extract($row_vendedor);
+        $lista_vendedores["records"][$id_vendedor] = [
+            'id_vendedor' => $id_vendedor,
+            'nome' => $nome,
+            'email' => $email
+        ];
+    }
+    //reposta com status 200
+    http_response_code(200);
 
-    $vendedor = [
-        'id' => $id,
-        'nome' => $nome,
-        'email' => $email,
-        'id_vendedor' => $id_vendedor
-    ];
+    //retornar os vendedores em json
+    echo json_encode($lista_vendedores);
 
-    $response = [
-        "erro" => false,
-        "vendedor" => $vendedor
-    ];
-}else{
-    $response = [
-        "erro" => true,
-        "mensagem" => "Vendedor não foi encontrado através da API!"
-    ];
 }
-http_response_code(200);
-echo json_encode($response);
 
