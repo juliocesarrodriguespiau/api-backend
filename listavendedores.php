@@ -14,7 +14,7 @@ include_once 'conexao.php';
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $response = "";
 
-$query_vendedor = "SELECT id, nome, email, id_vendedor, descricao_venda, comissao, valor_venda, data_venda FROM vendas WHERE id=:id LIMIT 1";
+$query_vendedor = "SELECT id, nome, email, id_vendedor FROM vendas WHERE id=:id LIMIT 1";
 $result_vendedor = $conn->prepare($query_vendedor); 
 $result_vendedor->bindParam(':id', $id, PDO::PARAM_INT);
 $result_vendedor->execute();
@@ -27,11 +27,7 @@ if(($result_vendedor) AND ($result_vendedor->rowCount() != 0)) {
         'id' => $id,
         'nome' => $nome,
         'email' => $email,
-        'id_vendedor' => $id_vendedor,
-        'descricao_venda' => $descricao_venda,
-        'comissao' => $comissao,
-        'valor_venda' => $valor_venda,
-        'data_venda' => $data_venda
+        'id_vendedor' => $id_vendedor
     ];
 
     $response = [

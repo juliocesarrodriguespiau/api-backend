@@ -10,26 +10,31 @@ header("Content-Type: application/json; charset=UTF-8");
 //incluir conexao
 include_once 'conexao.php';
 
-$query_vendedores = "SELECT id, nome, email FROM vendedores ORDER BY id";
-$result_vendedores = $conn->prepare($query_vendedores);
-$result_vendedores->execute();
+$query = "SELECT id, nome, email, id_vendedor, descricao_venda, comissao, valor_venda, data_venda FROM vendas ORDER BY id";
+$result = $conn->prepare($query);
+$result->execute();
 
-if(($result_vendedores) AND ($result_vendedores->rowCount() != 0)) {
-    while($row_vendedor = $result_vendedores->fetch(PDO::FETCH_ASSOC)) {
+if(($result) AND ($result->rowCount() != 0)) {
+    while($row_venda = $result->fetch(PDO::FETCH_ASSOC)) {
         //var_dump($row_vendedor);
-        extract($row_vendedor);
+        extract($row_venda);
 
-        $lista_vendedores["records"][$id] = [
+        $lista_vendas["records"][$id] = [
             'id' => $id,
             'nome' => $nome,
             'email' => $email,
+            'id_vendedor' => $id_vendedor,
+            'descricao_venda' => $descricao_venda,
+            'comissao' => $comissao,
+            'valor_venda' => $valor_venda,
+            'data_venda' => $data_venda
         ];
     }
     //reposta com status 200
     http_response_code(200);
 
     //retornar os vendedores em json
-    echo json_encode($lista_vendedores);
+    echo json_encode($lista_vendas);
 
 }
 

@@ -17,35 +17,35 @@ $dados = json_decode($reponse_json, true);
 
 if($dados) {
 
-    $query = "INSERT INTO vendas (nome, email, id_vendedor, descricao_venda, comissao, valor_venda, data_venda) VALUES (:nome, :email, :id_vendedor, :descricao_venda, :comissao, :valor_venda, :data_venda)";
+    $query = "INSERT INTO vendas (nome, email, id_vendedor) VALUES (:nome, :email, :id_vendedor)";
     $cad_venda = $conn->prepare($query);
 
     $cad_venda->bindParam(':nome', $dados['vendedor']['nome'], PDO::PARAM_STR);
     $cad_venda->bindParam(':email', $dados['vendedor']['email'], PDO::PARAM_STR);
     $cad_venda->bindParam(':id_vendedor', $dados['vendedor']['id_vendedor'], PDO::PARAM_STR);
-    $cad_venda->bindParam(':descricao_venda', $dados['vendedor']['descricao_venda'], PDO::PARAM_STR);
-    $cad_venda->bindParam(':comissao', $dados['vendedor']['comissao'], PDO::PARAM_STR);
-    $cad_venda->bindParam(':valor_venda', $dados['vendedor']['valor_venda'], PDO::PARAM_STR);
-    $cad_venda->bindParam(':data_venda', $dados['vendedor']['data_venda'], PDO::PARAM_STR);
+    // $cad_venda->bindParam(':descricao_venda', $dados['vendedor']['descricao_venda'], PDO::PARAM_STR);
+    // $cad_venda->bindParam(':comissao', $dados['vendedor']['comissao'], PDO::PARAM_STR);
+    // $cad_venda->bindParam(':valor_venda', $dados['vendedor']['valor_venda'], PDO::PARAM_STR);
+    // $cad_venda->bindParam(':data_venda', $dados['vendedor']['data_venda'], PDO::PARAM_STR);
 
     $cad_venda->execute();
 
     if($cad_venda->rowCount()) {
         $response = [
             "erro" => false,
-            "mensagem" => "Venda Cadastrado no DB via API com Sucesso!"
+            "mensagem" => "Vendedor Cadastrado no DB via API com Sucesso!"
         ];
     }else{
         $response = [
             "erro" => true,
-            "mensagem" => "Venda não Cadastrado através da API!"
+            "mensagem" => "Vendedor não Cadastrado através da API!"
         ];
     }
     
 } else {
     $response = [
         "erro" => true,
-        "mensagem" => "Venda não Cadastrado!"
+        "mensagem" => "Vendedor não Cadastrado!"
     ];
 }
 
