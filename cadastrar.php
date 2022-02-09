@@ -14,11 +14,12 @@ $reponse_json = file_get_contents("php://input");
 $dados = json_decode($reponse_json, true);
 
 // Função cálculo de comissão: base de 8.5%
-function comissao( $valor_venda ) {
-   return( 8.5 / 100 ) * $valor_venda;
+function comissao($valor_venda)
+{
+    return (8.5 / 100) * $valor_venda;
 }
 
-if($dados) {
+if ($dados) {
 
     $query = "INSERT INTO vendas (nome, email, id_vendedor, descricao_venda, comissao, valor_venda, data_venda) VALUES (:nome, :email, :id_vendedor, :descricao_venda, :comissao, :valor_venda, :data_venda)";
     $cad_venda = $conn->prepare($query);
@@ -32,19 +33,18 @@ if($dados) {
     $cad_venda->bindParam(':data_venda', $dados['vendedor']['data_venda'], PDO::PARAM_STR);
 
     $cad_venda->execute();
-    
-    if($cad_venda->rowCount()) {
+
+    if ($cad_venda->rowCount()) {
         $response = [
             "erro" => false,
             "mensagem" => "Venda Cadastrada no DB via API com Sucesso!"
         ];
-    }else{
+    } else {
         $response = [
             "erro" => true,
             "mensagem" => "Venda não Cadastrada através da API!"
         ];
     }
-    
 } else {
     $response = [
         "erro" => true,
@@ -54,5 +54,3 @@ if($dados) {
 
 http_response_code(200);
 echo json_encode($response);
-
-

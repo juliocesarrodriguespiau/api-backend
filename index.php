@@ -12,8 +12,8 @@ $query = "SELECT * FROM vendas INNER JOIN tbl_vendedor ON vendas.id_vendedor = t
 $result = $conn->prepare($query);
 $result->execute();
 
-if(($result) AND ($result->rowCount() != 0)) {
-    while($row_venda = $result->fetch(PDO::FETCH_ASSOC)) {
+if (($result) and ($result->rowCount() != 0)) {
+    while ($row_venda = $result->fetch(PDO::FETCH_ASSOC)) {
         //echo($row_venda);
         extract($row_venda);
 

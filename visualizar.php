@@ -15,11 +15,11 @@ $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $response = "";
 
 $query_vendedor = "SELECT id, nome, email, id_vendedor, descricao_venda, comissao, valor_venda, data_venda FROM vendas WHERE id=:id LIMIT 1";
-$result_vendedor = $conn->prepare($query_vendedor); 
+$result_vendedor = $conn->prepare($query_vendedor);
 $result_vendedor->bindParam(':id', $id, PDO::PARAM_INT);
 $result_vendedor->execute();
 
-if(($result_vendedor) AND ($result_vendedor->rowCount() != 0)) {
+if (($result_vendedor) and ($result_vendedor->rowCount() != 0)) {
     $row_vendedor = $result_vendedor->fetch(PDO::FETCH_ASSOC);
     extract($row_vendedor);
 
@@ -38,7 +38,7 @@ if(($result_vendedor) AND ($result_vendedor->rowCount() != 0)) {
         "erro" => false,
         "vendedor" => $vendedor
     ];
-}else{
+} else {
     $response = [
         "erro" => true,
         "mensagem" => "Vendedor não foi encontrado através da API!"
@@ -46,4 +46,3 @@ if(($result_vendedor) AND ($result_vendedor->rowCount() != 0)) {
 }
 http_response_code(200);
 echo json_encode($response);
-

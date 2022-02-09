@@ -14,8 +14,8 @@ $query = "SELECT id_vendedor, nome, email FROM tbl_vendedor ORDER BY id_vendedor
 $result = $conn->prepare($query);
 $result->execute();
 
-if(($result) AND ($result->rowCount() != 0)) {
-    while($row_venda = $result->fetch(PDO::FETCH_ASSOC)) {
+if (($result) and ($result->rowCount() != 0)) {
+    while ($row_venda = $result->fetch(PDO::FETCH_ASSOC)) {
         //var_dump($row_vendedor);
         extract($row_venda);
 
@@ -30,6 +30,4 @@ if(($result) AND ($result->rowCount() != 0)) {
 
     //retornar os vendedores em json
     echo json_encode($lista_vendedores);
-
 }
-
