@@ -5,7 +5,12 @@ Através dele é possível cadastrar, consultar e persistir os dados no Banco My
 
 
 ## Banco de dados - MySQL
-No MySQL foi criado o Database vendas, e as tabelas vendas e vendedors conforme script abaixo:
+No MySQL foi criado o Database vendas(Em simuladores como Xampp ou WampServer não se faz necessário rodar o comando use), e as tabelas vendas e vendedors conforme script abaixo:
+```sql
+  CREATE DATABASE vendas;
+
+  USE vendas;
+```
 ```sql
   CREATE TABLE vendas (
   	id INT NOT NULL  AUTO_INCREMENT,
