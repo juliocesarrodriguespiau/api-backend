@@ -8,6 +8,19 @@ header("Content-Type: application/json; charset=UTF-8");
 //incluir conexao
 include_once 'conexao.php';
 
+// $valor_venda = file_get_contents($dados['vendedor']['valor_venda']);
+// echo("VALORVENDA1: ".$valor_venda);
+
+// $valor_venda = 1000;
+// // Função de porcentagem: Quanto é X% de N?
+// function comissao( $valor_venda ) {
+// 	$comissao = ( 8.5 / 100 ) * $valor_venda;
+//     return $comissao;
+// }
+
+// comissao($valor_venda);
+// echo(" COMISSAO: " . $comissao);
+
 $query = "SELECT * FROM vendas INNER JOIN tbl_vendedor ON vendas.id_vendedor = tbl_vendedor.id_vendedor;";
 $result = $conn->prepare($query);
 $result->execute();
