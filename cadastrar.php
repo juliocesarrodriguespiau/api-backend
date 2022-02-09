@@ -13,6 +13,10 @@ include_once 'conexao.php';
 $reponse_json = file_get_contents("php://input");
 $dados = json_decode($reponse_json, true);
 
+$valor_venda = file_get_contents($dados['vendedor']['valor_venda']);
+echo($dados);
+
+
 if($dados) {
 
     $query = "INSERT INTO vendas (nome, email, id_vendedor, descricao_venda, comissao, valor_venda, data_venda) VALUES (:nome, :email, :id_vendedor, :descricao_venda, :comissao, :valor_venda, :data_venda)";

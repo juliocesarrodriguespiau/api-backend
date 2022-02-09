@@ -11,12 +11,29 @@ header("Content-Type: application/json; charset=UTF-8");
 include_once 'conexao.php';
 
 //$comissao = 71;
-$id = filter_input(INPUT_GET, 'id_vendedor', FILTER_SANITIZE_NUMBER_INT);
+$id_vendedor = filter_input(INPUT_GET, 'id_vendedor', FILTER_SANITIZE_NUMBER_INT);
 $response = "";
 
-$query_vendedor = "SELECT id_vendedor, nome, email FROM tbl_vendedor WHERE id_vendedor=:id_vendedor ORDER BY id_vendedor";
+//$query_vendedor = "SELECT id, nome, email, id_vendedor, descricao_venda, comissao, valor_venda, data_venda FROM vendas WHERE id=:id LIMIT 1";
+$query_vendedor = "SELECT 
+                        vendas.id, 
+                        tbl_vendedor.nome, 
+                        tbl_vendedor.email, 
+                        tbl_vendedor.id_vendedor, 
+                        vendas.descricao_venda, 
+                        vendas.comissao, 
+                        vendas.valor_venda, 
+                        vendas.data_venda 
+                    FROM 
+                        vendas 
+                        INNER JOIN tbl_vendedor ON vendas.id_vendedor = tbl_vendedor.id_vendedor
+                    WHERE 
+                        tbl_vendedor.id_vendedor = :id_vendedor
+                    LIMIT 1000
+                    ";
+
 $result_vendedor = $conn->prepare($query_vendedor); 
-$result_vendedor->bindParam(':id', $id, PDO::PARAM_INT);
+$result_vendedor->bindParam(':id_vendedor', $id_vendedor, PDO::PARAM_INT);
 $result_vendedor->execute();
 
 if(($result_vendedor) AND ($result_vendedor->rowCount() != 0)) {
@@ -24,9 +41,10 @@ if(($result_vendedor) AND ($result_vendedor->rowCount() != 0)) {
     extract($row_vendedor);
 
     $vendedor = [
-        'id_vendedor' => $id,
+        'id' => $id,
         'nome' => $nome,
         'email' => $email,
+        'id_vendedor' => $id_vendedor,
         'descricao_venda' => $descricao_venda,
         'comissao' => $comissao,
         'valor_venda' => $valor_venda,

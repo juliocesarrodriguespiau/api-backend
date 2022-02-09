@@ -14,7 +14,7 @@ $result->execute();
 
 if(($result) AND ($result->rowCount() != 0)) {
     while($row_venda = $result->fetch(PDO::FETCH_ASSOC)) {
-        //echo($row_vendedor);
+        //echo($row_venda);
         extract($row_venda);
 
         $lista_vendas["records"][$id] = [
