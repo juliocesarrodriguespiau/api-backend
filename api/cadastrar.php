@@ -13,13 +13,14 @@ include_once 'conexao.php';
 $reponse_json = file_get_contents("php://input");
 $dados = json_decode($reponse_json, true);
 
-// Função cálculo de comissão: base de 8.5%
-function comissao($valor_venda)
-{
-    return (8.5 / 100) * $valor_venda;
-}
 
 if ($dados) {
+
+    // Função cálculo de comissão: base de 8.5%
+    function comissao($valor_venda)
+    {
+        return (8.5 / 100) * $valor_venda;
+    }
 
     $query = "INSERT INTO vendas (nome, email, id_vendedor, descricao_venda, comissao, valor_venda, data_venda) VALUES (:nome, :email, :id_vendedor, :descricao_venda, :comissao, :valor_venda, :data_venda)";
     $cad_venda = $conn->prepare($query);
